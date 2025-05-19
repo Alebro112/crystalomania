@@ -1,0 +1,8 @@
+wsl --install -d Ubuntu-24.04
+
+sudo service redis-server start
+redis-cli
+
+sudo nano /etc/redis/redis.conf
+
+wsl --exec sudo service redis-server start
