@@ -2,15 +2,19 @@ import React from 'react'
 import { DashboardCurrencyBG } from './DashboardCurrencyBG'
 import { DCurrencyDTO } from '@/api/DTO/DB/DCurrency';
 
-export type Color = 'red' | 'yellow' | 'green' | 'purple' | 'blue' | 'orange';
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH;
+
+export type Color = 'red' | 'yellow' | 'green' | 'purple' | 'blue' | 'orange' | 'black' | 'pink' | 'white';
 
 interface DashboardCurrencyProps {
     currency: DCurrencyDTO;
 }
 
+
 export default function DashboardCurrency({
     currency
 }: DashboardCurrencyProps) {
+
     return (
         <div className="
             aspect-square 
@@ -44,7 +48,7 @@ export default function DashboardCurrency({
                 <div className="w-full flex-1 flex items-center justify-center overflow-hidden">
                     <img
                         alt={`${currency.name} gem`}
-                        src={`/images/gems/${currency.name}.png`}
+                        src={`${basePath}/images/gems/${currency.name}.png`}
                         className="
                         max-w-full 
                         max-h-full 

@@ -1,5 +1,5 @@
 "use client"
-import { useForm, SubmitHandler, set } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -8,7 +8,7 @@ import ComponentCard from "@/components/common/ComponentCard"
 import Label from "../Label"
 import Input from "../input/InputField"
 import Select from "../Select"
-import { useEffect, useLayoutEffect, useState } from "react"
+import { useCallback, useEffect, useLayoutEffect, useState } from "react"
 import Button from "@/components/ui/button/Button"
 import { RequestDepositSchema } from "@/api/DTO/Request/RequestDeposit";
 
@@ -17,7 +17,6 @@ import { DCurrencyDTO } from "@/api/DTO/DB/DCurrency";
 import { MakeDepositFormLoadingState } from "./types/MakeDepositForm";
 import { OverlayLoader } from "@/components/ui/overlayLoader";
 import { DTeamDTO } from "@/api/DTO/DB/DTeam";
-import { parse } from "path";
 import toast from "react-hot-toast";
 
 type DepositSchema = z.infer<typeof RequestDepositSchema>
@@ -27,18 +26,18 @@ const isLoading = (loading: MakeDepositFormLoadingState) => {
 }
 
 const pluralizePoints = (n: number): string => {
-  const mod10 = n % 10;
-  const mod100 = n % 100;
+    const mod10 = n % 10;
+    const mod100 = n % 100;
 
-  let word = 'баллов';
+    let word = 'баллов';
 
-  if (mod10 === 1 && mod100 !== 11) {
-    word = 'балл';
-  } else if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
-    word = 'балла';
-  }
+    if (mod10 === 1 && mod100 !== 11) {
+        word = 'балл';
+    } else if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
+        word = 'балла';
+    }
 
-  return word;
+    return word;
 }
 
 export default function MakeDepositFrom() {
@@ -50,7 +49,7 @@ export default function MakeDepositFrom() {
         reset,
         clearErrors,
         setError,
-        
+
     } = useForm<DepositSchema>({
         resolver: zodResolver(RequestDepositSchema),
         defaultValues: {
@@ -66,11 +65,15 @@ export default function MakeDepositFrom() {
         currencies: true
     })
 
-    const resetForm = () => {
-        reset()
-        clearErrors()
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
+    const resetForm = useCallback(
+        () => {
+            reset()
+            clearErrors()
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        },
+        [reset, clearErrors]
+    )
+
 
     useEffect(() => {
         setSelectedTeam(watch('teamId'))
@@ -114,7 +117,7 @@ export default function MakeDepositFrom() {
 
         getTeams()
         getCurrencies()
-    }, [])
+    }, [resetForm])
 
 
 

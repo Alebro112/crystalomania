@@ -36,7 +36,7 @@ export const connectSocket = (url: string = BASE_URL_SOCKET): Socket => {
  */
 export const getSocket = (): Socket => {
   if (!socket) {
-    throw new Error('Socket is not initialized. Call connectSocket() first.')
+    return connectSocket()
   }
 
   return socket

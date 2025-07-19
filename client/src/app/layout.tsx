@@ -6,7 +6,6 @@ import { Toaster } from 'react-hot-toast';
 
 import { SidebarProvider } from '@/context/SidebarContext';
 import { ThemeProvider } from '@/context/ThemeContext';
-import { useLayoutEffect } from 'react';
 import { AuthProvider } from '@/context/authProvider/AuthProvider';
 
 const font = Nunito({

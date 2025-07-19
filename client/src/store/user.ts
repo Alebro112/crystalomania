@@ -29,6 +29,7 @@ export const useUserStore = create<UserState>((set) => ({
     },
     login: async (dto: RequestLoginDTO) => {
         const response = await generalAPI.login(dto);
+        console.log('response', response)
         if (response.success) {
             set({ user: response.data, loading: false });
             return null;

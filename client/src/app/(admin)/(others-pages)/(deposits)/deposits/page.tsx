@@ -1,7 +1,5 @@
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
-import BasicTableOne from "@/components/tables/BasicTableOne";
 import DepositsTable from "@/components/tables/deposits/DepositTable";
-import { OverlayLoader } from "@/components/ui/overlayLoader";
 import { Metadata } from "next";
 import React from "react";
 

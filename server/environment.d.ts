@@ -12,7 +12,6 @@ declare global {
       REDIS_HOST: string,
       REDIS_PORT: number,
       SECRET_KEY: string,
-      JWT_REFRESH_SECRET: string
       CORS_URL: string
     }
   }

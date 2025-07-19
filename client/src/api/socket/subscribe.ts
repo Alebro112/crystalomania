@@ -1,4 +1,4 @@
-import { z, ZodError } from 'zod'
+import { z } from 'zod'
 import { getSocket } from './index'
 import { handleValidationError } from '..'
 import { ApiErrorResponse } from '../types'

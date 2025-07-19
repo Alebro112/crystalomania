@@ -7,7 +7,6 @@ const dateTimeHelper = require("#helpers/datetimeHelper.js")
 function cacheMiddleware(keyTemplate = null, cacheTime = null) {
     return async function (req, res, next) {
         try {
-            // Генерация ключа
             let cacheKey = keyTemplate;
 
             if (!cacheKey) {

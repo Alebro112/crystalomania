@@ -2,7 +2,7 @@ import { sequelize } from '#config/db';
 import { ForeignKeyConstraintError } from 'sequelize';
 import { Team } from '#controllers/team';
 
-import { DDepositDTO, Deposit, DepositStatus } from '#controllers/deposit';
+import { DDepositDTO, Deposit, DepositStatus, RequestDepositDTO } from '#controllers/deposit';
 import {
     DepositStatusEnum,
     insertDepositFunction,
@@ -15,6 +15,7 @@ import ApiError from '#middlewares/exceptions/api.error';
 import { QueryTypes } from 'sequelize';
 
 import SequalizeErrorHelper from '#helpers/sequalizeError';
+
 
 class DepositRepository {
     private sequalizeErrorHelper: SequalizeErrorHelper;
@@ -122,6 +123,31 @@ class DepositRepository {
         }
     };
 
+
+    calculateDepositCoef = (
+        depositDTO: RequestDepositDTO
+    ): number => {
+        let coef: number = 1;
+        const total = Object.values(depositDTO.details).reduce((acc, curr) => acc + curr)
+
+        Object.entries(depositDTO.details).forEach(([currency, amount]) => {
+            let x:number = 0;
+            if (amount >= 5) {
+                x = 3;
+            } else if (amount >= 3) {
+                x = 2;
+            }
+
+            coef += (x * (amount/total));
+        })
+
+        if (Object.values(depositDTO.details).length >= 6) {
+            coef *= 2
+        }
+
+        return coef
+    }
+
     insertDeposit: insertDepositFunction = async (
         depositDTO,
         logger,
@@ -129,6 +155,7 @@ class DepositRepository {
     ) => {
         let sql: string = '';
         let bind: {
+            coef?: number;
             team_id?: number;
             details?: string;
             status?: DepositStatusEnum;
@@ -140,10 +167,15 @@ class DepositRepository {
             bind.team_id = teamId;
             bind.details = JSON.stringify(details);
             bind.status = DepositStatusEnum.COMPLETED;
+            bind.coef = this.calculateDepositCoef(depositDTO);
 
             const selectParts: string[] = [];
             const currencyNames: string[] = [];
             let index: number = 1;
+
+            if (Object.keys(details).length < 1) {
+                return [null, ApiError.BadRequest('Invalid deposit details. Must be an object with currency')]
+            }
 
             for (const [name, count] of Object.entries(details)) {
                 if (
@@ -169,11 +201,18 @@ class DepositRepository {
 
             const valueUnion: string = selectParts.join('\nUNION ALL\n');
 
+            logger.info('test', {
+                details: {
+                    depositDTO,
+                    valueUnion
+                }
+            })
+
             sql = `
                 INSERT INTO deposits (team_id, amount, details, status_id, created_at, updated_at)
                 SELECT
                     $team_id,
-                    SUM(c.base_value::float * c.rate::float * v.count::float)::float,
+                    SUM(c.base_value::float * c.rate::float * v.count::float)::float * $coef,
                     $details,
                     $status,
                     NOW(),

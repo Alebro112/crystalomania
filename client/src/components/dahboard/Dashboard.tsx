@@ -1,14 +1,13 @@
 'use client'
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DashboardComponent from './DashboardComponent';
 import { OverlayLoader } from '../ui/overlayLoader';
-import { DCurrencyArraySchema, DCurrencyDTO } from '@/api/DTO/DB/DCurrency';
+import { DCurrencyArraySchema } from '@/api/DTO/DB/DCurrency';
 
 import * as generalAPI from "@/api/generalAPI"
 import { DashboardProvider, useDasboard } from './DashboardContext';
-import { connectSocket } from '@/api/socket';
 import subscribeSocketEvent from '@/api/socket/subscribe';
-import { set, z } from 'zod';
+import { z } from 'zod';
 import { DTeamArraySchema } from '@/api/DTO/DB/DTeam';
 import toast from 'react-hot-toast';
 
@@ -73,8 +72,6 @@ function DashboardNaked() {
 
         fetchTeams()
         fetchCurrencies()
-
-        const socket = connectSocket()
 
         subscribeSocketEvent('dashboard:update', DashboardUpdateSchema, (data) => {
             updateDashboardCurrencies(data.currencies)

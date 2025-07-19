@@ -6,9 +6,9 @@ export default class DUser {
     admin: boolean;
 
     constructor(model: any) {
-        this.id = model.id || null;
-        this.login = model.login || null;
-        this.name = model.name || null;
-        this.admin = model.admin || null;
+        this.id = model.id;
+        this.login = model.login;
+        this.name = model.name;
+        this.admin = model.admin;
     }
 }

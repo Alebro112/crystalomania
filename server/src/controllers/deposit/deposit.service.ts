@@ -6,7 +6,7 @@ import {
     RequestDepositDTO,
     RequestDepositDTODetails,
 } from '#controllers/deposit';
-import { currencyRepository } from '#controllers/currency';
+import { currencyRepository, currencyService } from '#controllers/currency';
 
 import ApiError from '#middlewares/exceptions/api.error';
 
@@ -256,11 +256,12 @@ class DepositService {
             }
 
             if (currenciesDict[currency]) {
-                acc[currency] = details[currency];
+                acc[currency] = details[currency]
             }
 
             return acc;
         }, {} as RequestDepositDTODetails);
+
 
         return {
             ...depositDTO,
@@ -369,7 +370,12 @@ class DepositService {
         logger: CustomLogger,
         transaction: Transaction,
     ) {
-        const colors = ['red', 'blue', 'orange', 'yellow', 'green', 'purple'];
+        const [currencies, currenciyError] =
+            await currencyService.getAllCurrencies(logger);
+        if (currenciyError) {
+            return;
+        }
+        const colors = currencies.map((currency) => currency.name);
 
         for (let i = 0; i < count; i++) {
             const teamId = Math.floor(Math.random() * 4) + 1;

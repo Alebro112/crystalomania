@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useUserStore } from "@/store"; 
 import { OverlayLoader } from "@/components/ui/overlayLoader";
-import { stat } from "fs";
 
 
 type AuthedRouteProps = {
@@ -21,7 +20,7 @@ export const AuthedRoute = ({ children }: AuthedRouteProps) => {
     if (!loading && user === null && !isOnSigninPage) {
       router.replace("/signin");
     }
-  }, [loading, user, router]);
+  }, [loading, user, router, pathname]);
 
   if (loading || user === null) {
     return <OverlayLoader />

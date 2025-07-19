@@ -66,8 +66,7 @@ export default function DashboardTeamPlace({
             for (const entry of entries) {
                 const height = entry.contentRect.height;
 
-
-                let aspectRatio = 105 / 187
+                const aspectRatio = 105 / 187
 
                 const width = height * aspectRatio;
                 setSize({ width, height });
@@ -77,7 +76,7 @@ export default function DashboardTeamPlace({
         observer.observe(container);
 
         return () => observer.disconnect();
-    }, []);
+    }, [containerRef]);
 
     return (
         <div className="absolute top-0 left-0" ref={ref}>

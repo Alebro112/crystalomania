@@ -19,7 +19,10 @@ const colors: {
     green: { startColor: '#13933F', endColor: '#013D19' },
     purple: { startColor: '#813F9C', endColor: '#230D3E' },
     blue: { startColor: '#381BDB', endColor: '#291884' },
-    orange: { startColor: '#FEBE00', endColor: '#B58001' },
+    orange: { startColor: '#EF9015', endColor: '#DD5F11' },
+    black: { startColor: '#848683', endColor: '#151B1B' },
+    pink: { startColor: '#F9BAD6', endColor: '#EA80B0' },
+    white: { startColor: '#F0EEEA', endColor: '#C8D0CF' }
 }
 
 

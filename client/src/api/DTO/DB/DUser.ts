@@ -4,7 +4,7 @@ export const DUserSchema = z.object({
     id: z.number({ coerce: true }),
     login: z.string(),
     name: z.string(),
-    admin: z.boolean(),
+    admin: z.boolean().optional(),
 });
 
 export const DUserArraySchema = z.array(DUserSchema);

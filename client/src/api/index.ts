@@ -1,6 +1,5 @@
 import axios, {
     AxiosError,
-    AxiosRequestConfig,
     AxiosResponse,
     InternalAxiosRequestConfig,
 } from 'axios';
@@ -8,8 +7,8 @@ import { ApiErrorResponse, ApiResult } from './types';
 import { ZodBackendError, zodBackendErrorSchema } from './DTO/ZodError';
 import { z, ZodError } from 'zod';
 
-export const BASE_URL_SOCKET = 'http://46.39.135.36:5000';
-export const BASE_URL = 'http://46.39.135.36:5000/api';
+export const BASE_URL_SOCKET = process.env.SOCKET_URL ?? 'http://localhost:5000';
+export const BASE_URL = process.env.API_URL ?? 'http://localhost:5000/api';
 
 const $api = axios.create({
     withCredentials: true,

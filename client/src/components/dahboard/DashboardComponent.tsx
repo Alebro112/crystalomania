@@ -1,13 +1,11 @@
 'use client'
-import React, { useState } from 'react'
+import React, { } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import DashboardCurrency from './components/DashboardCurrency';
 
 import { Roboto } from 'next/font/google'
-import { DCurrencyDTO } from '@/api/DTO/DB/DCurrency';
 import { useDasboard } from './DashboardContext';
 import DashboardTeam from './components/DashboardTeam';
-import { DTeamDTO } from '@/api/DTO/DB/DTeam';
 
 const roboto = Roboto({
     subsets: ["cyrillic", "latin"],

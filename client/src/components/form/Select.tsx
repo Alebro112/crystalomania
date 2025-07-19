@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 interface Option {
   value: string | number;
@@ -9,20 +9,17 @@ interface SelectProps {
   options: Option[];
   placeholder?: string;
   className?: string;
-  defaultValue?: string;
   value?: string | number;
   disabled?: boolean;
   success?: boolean;
   error?: boolean;
   hint?: string;
-  props?: any;
 }
 
 const Select: React.FC<SelectProps> = ({
   options,
   placeholder = "Select an option",
   className = "",
-  defaultValue = "",
   disabled = false,
   success = false,
   error = false,

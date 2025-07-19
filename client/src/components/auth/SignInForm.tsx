@@ -1,6 +1,5 @@
 "use client";
 import { RequestLoginDTO, RequestLoginSchema } from "@/api/DTO/Request/RequestLogin";
-import Checkbox from "@/components/form/input/Checkbox";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import Button from "@/components/ui/button/Button";
@@ -16,11 +15,8 @@ export default function SignInForm() {
     const {
             register,
             handleSubmit,
-            watch,
             formState: { errors },
-            reset,
             clearErrors,
-            setError,
             
         } = useForm<RequestLoginDTO>({
             resolver: zodResolver(RequestLoginSchema),
@@ -31,7 +27,6 @@ export default function SignInForm() {
         })
 
     const [showPassword, setShowPassword] = useState(false);
-    const [isChecked, setIsChecked] = useState(false);
     const userState = useUserStore((state) => state)
 
     useEffect(() => {

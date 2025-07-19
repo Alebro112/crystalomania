@@ -1,5 +1,4 @@
 import { DDepositDTO } from "@/api/DTO/DB/DDeposit";
-import ComponentCard from "@/components/common/ComponentCard";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import DepositTableRow from "./DepositTableRow";
 

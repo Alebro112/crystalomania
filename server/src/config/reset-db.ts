@@ -3,9 +3,9 @@ import { sequelize, connectDB } from "#config/db"
 import { Currency } from "#controllers/currency"
 import { Team } from "#controllers/team";
 import { DepositStatus, Deposit, depositService, RequestDepositDTO } from "#controllers/deposit";
-import { userService } from "#controllers/user"
 import logger from "./logger";
 import { Transaction } from "sequelize";
+import { RequestUserDTO, userService } from "#controllers/user"
 
 
 
@@ -16,13 +16,8 @@ const resetDatabase = async () => {
         await connectDB()
         sequelize.sync({ force: true }).then(async () => {
             await Currency.bulkCreate([{
-                name: 'red',
-                title: 'Красные кристалы',
-                base_value: 10,
-                total: 1,
-            }, {
-                name: 'blue',
-                title: 'Синие кристалы',
+                name: 'orange',
+                title: 'Оранжевые кристалы',
                 base_value: 10,
                 total: 1,
             }, {
@@ -31,18 +26,23 @@ const resetDatabase = async () => {
                 base_value: 10,
                 total: 1,
             }, {
-                name: 'yellow',
-                title: 'Желтые кристалы',
+                name: 'pink',
+                title: 'Розовые кристалы',
                 base_value: 10,
                 total: 1,
             }, {
-                name: 'purple',
-                title: 'Фиолетовые кристалы',
+                name: 'red',
+                title: 'Красные кристалы',
                 base_value: 10,
                 total: 1,
             }, {
-                name: 'orange',
-                title: 'Оранжевые кристалы',
+                name: 'black',
+                title: 'Чёрные кристалы',
+                base_value: 10,
+                total: 1,
+            }, {
+                name: 'white',
+                title: 'Белые кристалы',
                 base_value: 10,
                 total: 1,
             }])
@@ -74,9 +74,28 @@ const resetDatabase = async () => {
 
             const transaction = await sequelize.transaction();
 
-            await depositService.makeRandomDeposits(50, logger, transaction);
+            // await depositService.makeRandomDeposits(50, logger, transaction);
 
             await transaction.commit();
+
+            await userService.createUser(
+                {
+                    login: 'Alebro',
+                    password: '123456qwerty',
+                    name: 'Vsevolod Boltov',
+                    admin: true
+                } as RequestUserDTO,
+                logger
+            )
+
+            await userService.createUser(
+                {
+                    login: 'Testing',
+                    password: 'testtest1',
+                    name: 'Testing User'
+                } as RequestUserDTO,
+                logger
+            )
         })
     } catch (error) {
         console.error('Error during database reset:', error);
