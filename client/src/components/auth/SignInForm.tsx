@@ -31,7 +31,7 @@ export default function SignInForm() {
 
     useEffect(() => {
         if (userState.user) {
-            window.location.href = "/"
+            window.location.href = "/bombordiri"
         }
     }, [userState.user])
     
