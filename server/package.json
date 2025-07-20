@@ -3,6 +3,8 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
+        "reset": "tsconfig-paths/register src/config/reset-db.ts",
+        "start": "tsconfig-paths/register src/server.ts",
         "reset-db-debug": "nodemon --watch src --ext ts,js --exec ts-node -r tsconfig-paths/register src/config/reset-db.ts",
         "dev123": "rm -rf logs/* && nodemon --ignore logs/ index.ts",
         "dev": "nodemon --watch src --ext ts,js --exec ts-node -r tsconfig-paths/register src/server.ts",
